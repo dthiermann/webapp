@@ -6,8 +6,21 @@ const nameOfSite = "NotReddit";
 export default function App() {
   const [status, setStatus] = useState("loggedOut");
 
-  function handleSubmit() {
-    return 0;
+  
+  function openLoginForm() {
+    setStatus("loginForm");
+  }
+
+  function closeLoginForm() {
+    setStatus("loggedOut");
+  }
+
+  function handleLoginAttempt() {
+    setStatus("loggedIn");
+  }
+
+  function logOut() {
+    setStatus("loggedOut");
   }
 
   if (status === "loginForm") {
@@ -18,7 +31,7 @@ export default function App() {
       <div>
         <div>Welcome to {nameOfSite}</div>
         <button>Create Post</button>
-        <button>Logout</button>
+        <button onClick={logOut}>Logout</button>
         <SearchBox/>
         <SortBy/>
         <Feed/>
@@ -29,7 +42,7 @@ export default function App() {
     return (
       <div>
         <div>Welcome to {nameOfSite}</div>
-        <button>Login</button>
+        <button onClick={openLoginForm}>Login</button>
         <SearchBox/>
         <SortBy/>
         <Feed/>
@@ -40,35 +53,25 @@ export default function App() {
  function LoginForm() {
    return (
     <>
-    <form onSubmit={handleSubmit} >
+    <form onSubmit={handleLoginAttempt} >
       <label>
         Username
-        <input name="submitted-username" />
+        <input name="LoginAttemptted-username" />
       </label>
       <br/>
       <label>
         Password
-        <input name="submitted-password" />
+        <input name="LoginAttemptted-password" />
       </label>
       <br />
       <button>Login</button>
     </form>
-    <button>Go Back Home</button>
+    <button onClick={closeLoginForm}>Go Back Home</button>
   </>
    )
  }
 }
 
-
-
-      
-    
-
-
-
-function openLoginBox() {
-  
-}
 
 function SearchBox() {
   let search = "Search ";
@@ -86,7 +89,6 @@ function CreatePostField() {
     <div>
       <PostEntryBox />
       <AddImageButton />
-      <SubmitPost />
     </div>
   )
 }
@@ -103,11 +105,6 @@ function AddImageButton() {
   )
 }
 
-function SubmitPost() {
-  return (
-    <button>Submit</button>
-  )
-}
 
 function SortBy() {
   return (
