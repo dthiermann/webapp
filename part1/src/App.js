@@ -1,30 +1,52 @@
 import { useState } from 'react';
+import { useEffect } from 'react';
 
-// reddit clone
 const nameOfSite = "NotReddit";
+
+
 
 export default function App() {
   const [status, setStatus] = useState("loggedOut");
+  const [data, setData] = useState(null);
 
+  console.log(data);
   
   function openLoginForm() {
     setStatus("loginForm");
-  }
-
-  function closeLoginForm() {
-    setStatus("loggedOut");
-  }
-
-  function handleLoginAttempt() {
-    setStatus("loggedIn");
   }
 
   function logOut() {
     setStatus("loggedOut");
   }
 
+  function logIn() {
+    setStatus("loggedIn");
+  }
+
+  function createAccount() {
+    setStatus("creatingAccount");
+  }
+
   if (status === "loginForm") {
-    return LoginForm();
+    return (
+    <>
+    <form onSubmit={logIn} >
+      <label>
+        Username
+        <input name="submitted-username" />
+      </label>
+      <br/>
+      <label>
+        Password
+        <input name="submitted-password" />
+      </label>
+      <br />
+      <button>Login</button>
+    </form>
+    <button onClick={createAccount}>Create Account</button>
+    <button onClick={logOut}>Go Back Home</button>
+    </>
+    )
   }
   if (status === "loggedIn") {
     return (
@@ -49,27 +71,26 @@ export default function App() {
       </div>
     )
   }
-
- function LoginForm() {
-   return (
-    <>
-    <form onSubmit={handleLoginAttempt} >
+  if (status === "creatingAccount") {
+    return (
+      <>
+    <form onSubmit={createAccount} >
       <label>
-        Username
-        <input name="LoginAttemptted-username" />
+        Choose a username
+        <input name="new-username" />
       </label>
       <br/>
       <label>
-        Password
-        <input name="LoginAttemptted-password" />
+        Choose a password
+        <input name="new-password" />
       </label>
       <br />
-      <button>Login</button>
+      <button>Create Account</button>
     </form>
-    <button onClick={closeLoginForm}>Go Back Home</button>
-  </>
-   )
- }
+    <button onClick={logOut}>Go Back Home</button>
+    </>
+    )
+  }
 }
 
 
